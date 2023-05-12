@@ -13,20 +13,23 @@ import UpdateCoffee from './compenents/updateCoffee.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App></App>
+    element: <App></App>,
+    loader: () => fetch('http://localhost:5000/coffee')
+
   },
+  
   {
-    path:'/add-coffee',
+    path: '/add-coffee',
     element: <AddCoffee></AddCoffee>
   },
   {
-    path:'/update-coffee',
+    path: '/update-coffee',
     element: <UpdateCoffee></UpdateCoffee>
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-     <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

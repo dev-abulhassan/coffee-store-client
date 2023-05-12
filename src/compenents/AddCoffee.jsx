@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 
 const AddCoffee = () => {
    const handleAddCoffee = event => {
@@ -11,10 +12,33 @@ const AddCoffee = () => {
       const category = form.category.value;
       const details = form.details.value;
       const photo = form.photo.value;
-      const newCoffee = {name, quantity, supplier, taste, category, details, photo};
+      const newCoffee = { name, quantity, supplier, taste, category, details, photo };
       console.log(newCoffee);
 
-      
+
+      // send to server
+      fetch('http://localhost:5000/coffee', {
+         method: 'POST',
+         headers: {
+            'content-type': 'application/json'
+         },
+         body: JSON.stringify(newCoffee)
+      })
+         .then(res => res.json())
+         .then(data => {
+            console.log(data)
+            if (data.insertedId) {
+               Swal.fire({
+                  title: 'Success!',
+                  text: 'Coffee Added Successfully',
+                  icon: 'success',
+                  confirmButtonText: 'Coffee Added Successfully'
+               })
+            }
+         }
+         )
+
+
    }
 
    return (
@@ -22,7 +46,7 @@ const AddCoffee = () => {
          <div className='bg-[#F4F3F0] p-24'>
             <div className='text-center'>
                <h2 className='text-3xl mb-3'>Add Coffee</h2>
-               <p className=''>It is a long established fact that a reader will be distraceted by the readable content of a page when looking at <br /> its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed <br /> to using Content here.</p>
+               <p className='font-normal text-lg text-[#1B1A1A]'>It is a long established fact that a reader will be distraceted by the readable content of a page when looking at <br /> its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed <br /> to using Content here.</p>
             </div>
             <div className='py-5'>
                <form onSubmit={handleAddCoffee}>
